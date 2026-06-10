@@ -5,7 +5,6 @@ use axum::{extract::State, http::HeaderMap, Json};
 use chrono::Utc;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
-use sqlx::SqlitePool;
 
 #[derive(Debug, Deserialize)]
 pub struct BatchUploadRequest {

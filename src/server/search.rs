@@ -3,7 +3,6 @@
 use crate::server::{auth, error::ApiError};
 use axum::{extract::State, http::HeaderMap, Json};
 use serde::{Deserialize, Serialize};
-use sqlx::SqlitePool;
 
 #[derive(Debug, Deserialize)]
 pub struct SearchRequest {
