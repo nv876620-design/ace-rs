@@ -31,13 +31,35 @@ The easiest way to run the server:
 export ACE_ADMIN_PASSWORD=your-strong-admin-password
 export ACE_SESSION_SECRET=your-session-secret-key
 
-# Start server
-docker-compose up --build
+# Start server (pulls pre-built image from ghcr.io)
+docker-compose up
 
 # Server will be available at http://localhost:8080
 ```
 
+To build locally instead of using the pre-built image:
+
+```bash
+# Uncomment 'build: .' and comment 'image:' line in docker-compose.yml
+docker-compose up --build
+```
+
 ## Manual Docker Run
+
+Using pre-built image:
+
+```bash
+docker run -d \
+  -p 8080:8080 \
+  -v ace-data:/data \
+  -e ACE_ADMIN_PASSWORD=your-strong-admin-password \
+  -e ACE_SESSION_SECRET=your-session-secret-key \
+  -e RUST_LOG=info \
+  --name ace-server \
+  ghcr.io/ndnhatvien/ace-server-rs:latest
+```
+
+Or build locally:
 
 ```bash
 docker build -t ace-server .

@@ -65,15 +65,23 @@ cargo build --release
 
 You can now run your own local-first indexing and search server instead of relying on an external hosted API.
 
-### Quick Start with Docker Compose
+### Quick Start with Docker
 
 ```bash
 # Set admin password
 export ACE_ADMIN_PASSWORD=your-strong-password
 export ACE_SESSION_SECRET=your-secret-key
 
-# Start server
-docker-compose up --build
+# Run pre-built image from GitHub Container Registry
+docker run -d \
+  -p 8080:8080 \
+  -v ace-data:/data \
+  -e ACE_ADMIN_PASSWORD \
+  -e ACE_SESSION_SECRET \
+  ghcr.io/ndnhatvien/ace-server-rs:latest
+
+# Or use docker-compose
+docker-compose up
 
 # Visit http://localhost:8080/admin to create tokens
 ```
@@ -89,6 +97,7 @@ ace-tool-rs --base-url http://localhost:8080 --token <your-token>
 - BM25-based semantic retrieval
 - Simple Admin UI for token management
 - No external dependencies
+- Pre-built Docker images for linux/amd64 and linux/arm64
 
 **See [docs/self-hosted-server.md](docs/self-hosted-server.md) for complete setup, configuration, and deployment instructions.**
 
