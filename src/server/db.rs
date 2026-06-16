@@ -12,12 +12,16 @@ pub async fn setup_database(db_path: &Path) -> Result<SqlitePool> {
         tokio::fs::create_dir_all(parent).await?;
     }
 
-    let db_url = format!("sqlite:{}", db_path.display());
+    let db_url = format!("sqlite://{}", db_path.display());
     info!("Opening database: {}", db_url);
+
+    use std::str::FromStr;
+    let options = sqlx::sqlite::SqliteConnectOptions::from_str(&db_url)?
+        .create_if_missing(true);
 
     let pool = SqlitePoolOptions::new()
         .max_connections(10)
-        .connect(&db_url)
+        .connect_with(options)
         .await?;
 
     // Initialize schema
